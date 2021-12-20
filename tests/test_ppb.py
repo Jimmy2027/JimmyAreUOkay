@@ -19,6 +19,7 @@ class TestPPB(unittest.TestCase):
             print(list(mongodb.collection.find({})))
         except Exception as e:
             norby.send_msg(whichbot='jimmy_watchdog', message=f'Test test_ppb_db failed with: \n {e}')
+            assert False, e
 
     def test_upload(self):
         """
@@ -29,6 +30,7 @@ class TestPPB(unittest.TestCase):
             ppb.upload(file_path=test_file, lifetime=1)
         except Exception as e:
             norby.send_msg(whichbot='jimmy_watchdog', message=f'Test test_upload failed with: \n {e}')
+            assert False, e
 
 
 if __name__ == '__main__':
