@@ -26,6 +26,19 @@ class TestService(unittest.TestCase):
                        message=f'ddclient service not running:\n {service_status}')
         assert False
 
+    def test_mongodb(self):
+        """
+        Verify if mongodb is running.
+        """
+        service_status = get_service_status('mongodb')
+
+        if 'started' in service_status:
+            return
+
+        norby.send_msg(whichbot='jimmy_watchdog',
+                       message=f'mongodb service not running:\n {service_status}')
+        assert False
+
 
 if __name__ == '__main__':
     TestService().test_ddclient()
