@@ -19,7 +19,7 @@ class TestService(unittest.TestCase):
         """
         service_status = get_service_status('ddclient')
 
-        if 'running' in service_status:
+        if 'started' in service_status:
             return
 
         norby.send_msg(whichbot='jimmy_watchdog',
