@@ -8,9 +8,11 @@ from modun.file_io import dict2json, json2dict
 
 def get_ip():
     command = "ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'"
-    ip_address = subprocess.check_output(command, shell=True).decode('utf-8').replace('\n', '')
-
-    return ip_address
+    return (
+        subprocess.check_output(command, shell=True)
+            .decode('utf-8')
+            .replace('\n', '')
+    )
 
 
 class TestIpAddr(unittest.TestCase):
