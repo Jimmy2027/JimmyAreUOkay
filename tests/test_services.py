@@ -18,15 +18,13 @@ class TestService(unittest.TestCase):
         Verify if ddclient is running.
         """
         service_status = get_service_status('ddclient')
-        print(service_status)
 
-        # if 'running' in service_status:
-        #     return
-        # else:
-        #     norby.send_msg(whichbot='jimmy_watchdog',
-        #                    message=f'DDclient service not running:\n {service_status}')
-        #
-        #     assert False
+        if 'running' in service_status:
+            return
+
+        norby.send_msg(whichbot='jimmy_watchdog',
+                       message=f'ddclient service not running:\n {service_status}')
+        assert False
 
 
 if __name__ == '__main__':
