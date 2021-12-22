@@ -1,4 +1,5 @@
 import subprocess
+import time
 import unittest
 
 import norby
@@ -17,10 +18,14 @@ class TestWebsites(unittest.TestCase):
         """
         Check if hendrikklug.xyz is up.
         """
-        website_status = get_website_status('https://hendrikklug.xyz')
+        for _ in range(5):
+            website_status = get_website_status('https://hendrikklug.xyz')
 
-        if '200' in website_status:
-            return
+            if '200' in website_status:
+                return
+
+            # wait for 10 seconds before trying again
+            time.sleep(10)
 
         norby.send_msg(whichbot='jimmy_watchdog',
                        message=f'hendrikklug.xyz is unavailable:\n {website_status}')
