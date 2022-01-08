@@ -37,6 +37,7 @@ class TestIpAddr(unittest.TestCase):
             if old_ip != current_ip['ip_addr']:
                 norby.send_msg(whichbot='jimmy_watchdog',
                                message=f'IP Address on Jimmy has changed from {old_ip} to: \n {current_ip["ip_addr"]}')
+                dict2json(out_path=ip_addr_fn, d=current_ip)
 
                 assert False
 
