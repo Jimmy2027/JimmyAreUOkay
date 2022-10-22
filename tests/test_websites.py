@@ -12,14 +12,18 @@ def get_website_status(which_website: str):
 class TestWebsites(unittest.TestCase):
     """
     Test if websites are available.
-    Check if curl to a website return http 200 response:
-    HTTP 200 OK success status response code indicates that the request has succeeded
+    Check if curl to a website returns http 200 response:
+
     """
 
     def website_verify(self, website_url: str):
         website_status = get_website_status(website_url)
-
-        if '200' in website_status:
+        http_return_code = int(website_status.split(' ')[1])
+        if http_return_code in {
+            200,  # HTTP 200 OK success status response code indicates that the request has succeeded
+            302,  # performing URL redirection
+            301,  # 301 Moved Permanently is used for permanent redirecting
+        }:
             return
 
         # wait for 10 seconds before trying again
@@ -61,4 +65,4 @@ class TestWebsites(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    TestWebsites().test_hendrikklug()
+    unittest.main()
