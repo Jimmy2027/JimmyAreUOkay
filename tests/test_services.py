@@ -2,6 +2,7 @@ import subprocess
 import unittest
 
 import norby
+import pytest
 
 
 def get_service_status(which_client: str):
@@ -26,6 +27,7 @@ class TestService(unittest.TestCase):
                        message=f'ddclient service not running:\n {service_status}')
         assert False
 
+    @pytest.xfail()
     def test_mongodb(self):
         """
         Verify if mongodb is running.
