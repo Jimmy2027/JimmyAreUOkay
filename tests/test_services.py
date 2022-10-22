@@ -14,7 +14,7 @@ class TestService(unittest.TestCase):
     Test if services are running by parsing "rc-status".
     """
 
-    @pytest.xfail()
+    @pytest.mark.xfail
     def test_mongodb(self):
         """
         Verify if mongodb is running.
