@@ -57,7 +57,7 @@ class TestWebsites(unittest.TestCase):
         """
         Check if docuwiki is up.
         """
-        self.website_verify('# http://jimmy123.hopto.org:2095/dokuwiki/')
+        self.website_verify('http://jimmy123.hopto.org:2095/dokuwiki/')
 
 
 if __name__ == '__main__':
