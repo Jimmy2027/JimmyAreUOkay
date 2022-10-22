@@ -14,19 +14,6 @@ class TestService(unittest.TestCase):
     Test if services are running by parsing "rc-status".
     """
 
-    def test_ddclient(self):
-        """
-        Verify if ddclient is running.
-        """
-        service_status = get_service_status('ddclient')
-
-        if 'started' in service_status:
-            return
-
-        norby.send_msg(whichbot='jimmy_watchdog',
-                       message=f'ddclient service not running:\n {service_status}')
-        assert False
-
     @pytest.xfail()
     def test_mongodb(self):
         """
