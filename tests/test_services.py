@@ -54,19 +54,6 @@ class TestService(unittest.TestCase):
                        message=f'apache2 service not running:\n {service_status}')
         assert False
 
-    def test_haproxy(self):
-        """
-        Verify if apache2 is running.
-        """
-        service_status = get_service_status('haproxy')
-
-        if 'started' in service_status:
-            return
-
-        norby.send_msg(whichbot='jimmy_watchdog',
-                       message=f'haproxy service not running:\n {service_status}')
-        assert False
-
 
 if __name__ == '__main__':
     TestService().test_ddclient()
