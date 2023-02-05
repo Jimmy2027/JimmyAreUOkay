@@ -26,9 +26,6 @@ class TestWebsites(unittest.TestCase):
         }:
             return
 
-        # wait for 10 seconds before trying again
-        time.sleep(10)
-
         norby.send_msg(whichbot='jimmy_watchdog',
                        message=f'{website_url} is unavailable:\n {website_status}')
         assert False
