@@ -1,3 +1,4 @@
+import subprocess
 import unittest
 import urllib.request
 
@@ -8,6 +9,14 @@ def get_website_status(which_website: str) -> int:
     return urllib.request.urlopen(which_website).getcode()
 
 
+def get_website_status_(which_website: str):
+    return int(
+        subprocess.check_output(f"curl -I {which_website} | grep HTTP", shell=True).decode('utf-8').replace('\n',
+                                                                                                            '').split(
+            ' ')[1]
+    )
+
+
 class TestWebsites(unittest.TestCase):
     """
     Test if websites are available.
@@ -16,13 +25,18 @@ class TestWebsites(unittest.TestCase):
     """
 
     def website_verify(self, website_url: str):
-        http_return_code = get_website_status(website_url)
-        if http_return_code in {
-            200,  # HTTP 200 OK success status response code indicates that the request has succeeded
-            302,  # performing URL redirection
-            301,  # 301 Moved Permanently is used for permanent redirecting
-        }:
-            return
+
+        for website_check in [get_website_status_, get_website_status]:
+            try:
+                http_return_code = website_check(website_url)
+                if http_return_code in {
+                    200,  # HTTP 200 OK success status response code indicates that the request has succeeded
+                    302,  # performing URL redirection
+                    301,  # 301 Moved Permanently is used for permanent redirecting
+                }:
+                    return
+            except Exception as e:
+                http_return_code = 'failed'
 
         norby.send_msg(whichbot='jimmy_watchdog',
                        message=f'{website_url} is unavailable:\n {http_return_code}')
