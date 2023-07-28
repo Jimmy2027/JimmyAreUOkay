@@ -1,12 +1,11 @@
-import subprocess
-import time
 import unittest
+import urllib.request
 
 import norby
 
 
-def get_website_status(which_website: str):
-    return subprocess.check_output(f"curl -I {which_website} | grep HTTP", shell=True).decode('utf-8').replace('\n', '')
+def get_website_status(which_website: str) -> int:
+    return urllib.request.urlopen(which_website).getcode()
 
 
 class TestWebsites(unittest.TestCase):
@@ -17,8 +16,7 @@ class TestWebsites(unittest.TestCase):
     """
 
     def website_verify(self, website_url: str):
-        website_status = get_website_status(website_url)
-        http_return_code = int(website_status.split(' ')[1])
+        http_return_code = get_website_status(website_url)
         if http_return_code in {
             200,  # HTTP 200 OK success status response code indicates that the request has succeeded
             302,  # performing URL redirection
@@ -27,7 +25,7 @@ class TestWebsites(unittest.TestCase):
             return
 
         norby.send_msg(whichbot='jimmy_watchdog',
-                       message=f'{website_url} is unavailable:\n {website_status}')
+                       message=f'{website_url} is unavailable:\n {http_return_code}')
         assert False
 
     def test_hendrikklug(self):
